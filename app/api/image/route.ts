@@ -1,5 +1,3 @@
-import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
-import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { Configuration, OpenAIApi } from "openai";
@@ -36,22 +34,11 @@ export async function POST(req: Request) {
       return new NextResponse("Missing resolution", { status: 400 });
     }
 
-    const isAllowed = await checkApiLimit();
-    const isPro = await checkSubscription();
-
-    if (!isAllowed && !isPro) {
-      return new NextResponse("API Limit Exceeded", { status: 403 });
-    }
-
     const response = await openAi.createImage({
       prompt,
       n: parseInt(amount, 10),
       size: resolution,
     });
-
-    if (!isPro) {
-      await increaseApiLimit();
-    }
 
     return NextResponse.json(response.data.data, { status: 200 });
   } catch (error) {

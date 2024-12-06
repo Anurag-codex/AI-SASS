@@ -14,14 +14,10 @@ import { Loader } from "@/components/loader";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-import useProModal from "@/hooks/use-pro-modal";
-import { toast } from "react-hot-toast";
 import { formSchema } from "./constants";
 
 const VideoPage = () => {
   const router = useRouter();
-  const proModal = useProModal();
   const [video, setVideo] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,11 +39,6 @@ const VideoPage = () => {
       form.reset();
     } catch (error: any) {
       console.log(error);
-      if (error?.response?.status === 403) {
-        proModal.onOpen();
-      } else {
-        toast.error("Something went wrong.");
-      }
     } finally {
       router.refresh();
     }

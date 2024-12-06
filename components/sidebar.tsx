@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import { FC } from "react";
 
 import { cn } from "@/lib/utils";
-import FreeCounter from "./free-counter";
+
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 
@@ -56,12 +56,8 @@ const routes = [
   },
 ];
 
-interface SidebarProps {
-  apiLimitCount: number;
-  isPro: boolean;
-}
 
-const Sidebar: FC<SidebarProps> = ({ apiLimitCount = 0, isPro = false }) => {
+const Sidebar = () => {
   const pathname = usePathname();
 
   return (
@@ -71,7 +67,7 @@ const Sidebar: FC<SidebarProps> = ({ apiLimitCount = 0, isPro = false }) => {
           <div className="relative w-8 h-8 mr-4">
             <Image fill alt="Logo" src="/logo.png" />
           </div>
-          <h1 className={cn("text-2xl font-bold", montserrat.className)}>Prometheus</h1>
+          <h1 className={cn("text-2xl font-bold", montserrat.className)}>Anurag</h1>
         </Link>
         <div className="space-y-1">
           {routes.map((route) => (
@@ -91,7 +87,6 @@ const Sidebar: FC<SidebarProps> = ({ apiLimitCount = 0, isPro = false }) => {
           ))}
         </div>
       </div>
-      <FreeCounter apiLimitCount={apiLimitCount} isPro={isPro} />
     </div>
   );
 };
